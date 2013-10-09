@@ -29,6 +29,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1006,22 +1007,28 @@ namespace LoLNotes.Gui
 
 		static string CallArgToString(object arg)
 		{
-			if (arg is RemotingMessage)
-			{
-				return ((RemotingMessage)arg).operation;
+		    var remotingMessage = arg as RemotingMessage;
+		    if (remotingMessage != null)
+		    {
+		        return string.Format("{0}.{1}", remotingMessage.destination, remotingMessage.operation);
 			}
-			if (arg is DSK)
+
+		    var dskMessage = arg as DSK;
+            if (dskMessage != null)
 			{
-				var dsk = (DSK)arg;
+                var dsk = dskMessage;
 				var ao = dsk.Body as ASObject;
 				if (ao != null)
 					return ao.TypeName;
 			}
-			if (arg is CommandMessage)
+
+		    var commandMessage = arg as CommandMessage;
+		    if (commandMessage != null)
 			{
-				return CommandMessage.OperationToString(((CommandMessage)arg).operation);
+				return CommandMessage.OperationToString(commandMessage.operation);
 			}
-			return arg.ToString();
+			
+            return arg.ToString();
 		}
 
 		void Connection_Call(object sender, Notify call, Notify result)
