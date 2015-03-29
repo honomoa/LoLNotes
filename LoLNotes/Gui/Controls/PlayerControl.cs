@@ -359,7 +359,7 @@ namespace LoLNotes.Gui.Controls
 					var assists = game.Statistics.GetInt(RawStat.ASSISTS);
 					var left = game.Leaver;
 					var botgame = game.QueueType == "BOT";
-
+                    var gameType = CreateLabel(string.Format("{0}", game.SubType));
 					var wonlabel = CreateLabel(string.Format("{0}{1}", left ? "[L] " : "", won ? "Won" : "Lost"));
 					wonlabel.ForeColor = won ? Color.Green : Color.Red;
 
@@ -380,6 +380,7 @@ namespace LoLNotes.Gui.Controls
 
 					var controls = new List<Control>
 					{
+                        gameType,
 						champicon,
 						wonlabel,
 						kdrlbl,
