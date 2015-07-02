@@ -410,6 +410,7 @@ namespace LoLNotes.Gui.Controls
 					var botgame = game.QueueType == "BOT";
 					var unranked = game.QueueType != "RANKED_SOLO_5x5";
 
+					var gameType = CreateLabel(string.Format("{0}", game.SubType));
 					var wonlabel = CreateLabel(string.Format("{0}{1}", left ? "[L] " : "", won ? "Won" : "Lost"));
 					if (grayUnranked && unranked)
 					{
@@ -437,6 +438,7 @@ namespace LoLNotes.Gui.Controls
 
 					var controls = new List<Control>
 					{
+                        gameType,
 						champicon,
 						wonlabel,
 						kdrlbl,
